@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-${acc.id}계좌로 ${acc.balance}원이 입금되었습니다. <br>
+${id}계좌로 ${money}원이 입금되었습니다. <br>
 </body>
 </html>

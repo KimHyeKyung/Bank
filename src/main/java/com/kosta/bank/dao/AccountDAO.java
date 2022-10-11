@@ -3,9 +3,13 @@ package com.kosta.bank.dao;
 import com.kosta.bank.bean.Account;
 
 public interface AccountDAO {
+	
+	//계좌개설
 	void insertAccount(Account acc) throws Exception;
 
-	void deposit(Account acc) throws Exception;
+	//입금,출금
+	void updateAccount(Account acc) throws Exception;
 
-	void withdraw(Account acc) throws Exception;
+	//계좌조회
+	Account selectAccount(String id) throws Exception;
 }

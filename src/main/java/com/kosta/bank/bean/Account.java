@@ -50,6 +50,11 @@ public class Account {
 		this.grade = grade;
 	}
 	
+	public void deposit(int money) {
+		this.balance += money;
+	}
 	
-	
+	public void withdraw(int money) {
+		this.balance -= money;
+	}
 }

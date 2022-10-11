@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kosta.bank.bean.Account;
 import com.kosta.bank.dao.AccountDAO;
@@ -23,12 +24,14 @@ public class AccountController {
 //		this.accountDAO = accountDAO;
 //	}
 
+	//로그인
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	String main(Model model) {
 		model.addAttribute("page","login_form");
 		return "main";
 	}
 	
+	//계좌개설 페이지
 	@RequestMapping(value = "/makeaccount", method = RequestMethod.GET)
 	String makeAccount(Model model) {
 		model.addAttribute("page", "makeaccount_form");
@@ -70,20 +73,20 @@ public class AccountController {
 	
 	//입금수행
 	@RequestMapping(value = "/deposit", method = RequestMethod.POST)
-	String deposit(HttpServletRequest request ,Model model, @ModelAttribute Account acc) {
+	String deposit(Model model, @RequestParam("id") String id, @RequestParam("money") int money) {
 		try {
-			int money = Integer.parseInt(request.getParameter("money"));
-			int balance = money;
-			acc.setBalance(balance);
-			accountDAO.deposit(acc);
-			model.addAttribute("acc",acc);
+			Account acc = accountDAO.selectAccount(id);
+			if(acc == null) throw new Exception("계좌번호 오류");
+			acc.deposit(money);
+			accountDAO.updateAccount(acc);
+			model.addAttribute("id",acc.getId());
+			model.addAttribute("money",money);
 			model.addAttribute("page","deposit_success");
 		} catch (Exception e) {
 			e.printStackTrace();
 			model.addAttribute("err", "입금 실패");
 			model.addAttribute("page", "err");
 		}
-		
 		return "main";
 	}
 	
@@ -96,13 +99,15 @@ public class AccountController {
 	
 	//출금수행
 	@RequestMapping(value = "/withdraw", method = RequestMethod.POST)
-	String withdraw(HttpServletRequest request, Model model, @ModelAttribute Account acc) {
+	String withdraw(Model model, @RequestParam("id") String id, @RequestParam("money") int money) {
 		try {
-			int money = Integer.parseInt(request.getParameter("money"));
-			int balance = money;
-			acc.setBalance(balance);
-			accountDAO.withdraw(acc);
-			model.addAttribute("acc",acc);
+			Account acc = accountDAO.selectAccount(id);
+			if(acc == null) throw new Exception("계좌번호 오류");
+			acc.withdraw(money);
+			if(acc.getBalance() < money) throw new Exception("잔액 부족");
+			accountDAO.updateAccount(acc);
+			model.addAttribute("id",acc.getId());
+			model.addAttribute("money",money);
 			model.addAttribute("page","withdraw_success");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -112,9 +117,26 @@ public class AccountController {
 		return "main";
 	}
 	
+	//계좌조회 페이지
 	@RequestMapping(value = "/accinfo", method = RequestMethod.GET)
 	String accinfo(Model model) {
 		model.addAttribute("page", "accinfo_form");
+		return "main";
+	}
+	
+	//계좌조회 수행
+	@RequestMapping(value = "/acc_info", method = RequestMethod.POST)
+	String accinfo(@RequestParam("id") String id, Model model) {
+		try {
+			Account acc = accountDAO.selectAccount(id);
+			if(acc==null) throw new Exception();
+			model.addAttribute("acc", acc);
+			model.addAttribute("page","accinfo_success");
+		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("err", "계좌조회 실패");
+			model.addAttribute("page", "err");
+		}
 		return "main";
 	}
 	

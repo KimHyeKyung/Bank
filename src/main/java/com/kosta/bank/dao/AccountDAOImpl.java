@@ -12,20 +12,23 @@ public class AccountDAOImpl implements AccountDAO{
 		this.sqlSession = sqlSession;
 	}
 
+	//계좌개설
 	@Override
 	public void insertAccount(Account acc) throws Exception {
 		sqlSession.insert("mapper.account.insertAccount", acc);
-		
 	}
 
+	//입금,출금
 	@Override
-	public void deposit(Account acc) throws Exception {
-		sqlSession.update("mapper.account.deposit", acc);
+	public void updateAccount(Account acc) throws Exception {
+		sqlSession.update("mapper.account.updateAccount", acc);
 	}
 
+	//계좌조회
 	@Override
-	public void withdraw(Account acc) throws Exception {
-		sqlSession.update("mapper.account.withdraw", acc);
+	public Account selectAccount(String id) throws Exception {
+		return sqlSession.selectOne("mapper.account.selectAccount", id);
 	}
+
 
 }
