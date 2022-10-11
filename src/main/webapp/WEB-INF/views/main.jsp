@@ -17,7 +17,7 @@
 	#table {
 		margin:0 auto;
 		width:960px; height:500px;
-		color:gray;
+		color:darkolivegreen;
 		/* border:1px solid gray; */
 	}
 	#table #top {
@@ -33,7 +33,7 @@
 		valign : top;
 	}
 	#table #right {
-		background-color: #bcab8f;
+		background-color: gainsboro;
 		margin: 0 auto;
 		padding-top:20px;
 	}

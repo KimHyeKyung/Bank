@@ -1,5 +1,7 @@
 package com.kosta.bank.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 
@@ -103,8 +105,11 @@ public class AccountController {
 		try {
 			Account acc = accountDAO.selectAccount(id);
 			if(acc == null) throw new Exception("계좌번호 오류");
-			acc.withdraw(money);
-			if(acc.getBalance() < money) throw new Exception("잔액 부족");
+			if(acc.getBalance() < money) {
+				throw new Exception("잔액 부족");
+			}else {
+				acc.withdraw(money);
+			}
 			accountDAO.updateAccount(acc);
 			model.addAttribute("id",acc.getId());
 			model.addAttribute("money",money);
@@ -139,5 +144,22 @@ public class AccountController {
 		}
 		return "main";
 	}
+	
+	//전체계좌 조회
+	@RequestMapping(value = "/allaccinfo", method = RequestMethod.GET)
+	String allaccinfo(Model model) {
+		try {
+			List<Account> accs = accountDAO.selectAccountList();
+			model.addAttribute("accs", accs);
+			model.addAttribute("page","allaccinfo_success");
+		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("err", "전체계좌조회 실패");
+			model.addAttribute("page", "err");
+		}
+		return "main";
+	}
+	
+	
 	
 }

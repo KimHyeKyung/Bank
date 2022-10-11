@@ -1,5 +1,7 @@
 package com.kosta.bank.dao;
 
+import java.util.List;
+
 import com.kosta.bank.bean.Account;
 
 public interface AccountDAO {
@@ -12,4 +14,7 @@ public interface AccountDAO {
 
 	//계좌조회
 	Account selectAccount(String id) throws Exception;
+
+	//전체계좌 조회
+	List<Account> selectAccountList() throws Exception;
 }

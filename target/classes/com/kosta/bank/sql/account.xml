@@ -28,4 +28,12 @@
 			where id = #{id}
 		]]>
 	</select>
+	
+	<!-- 전체계좌조회 -->
+	<select id="selectAccountList" resultType="com.kosta.bank.bean.Account">
+		<![CDATA[
+			select *
+			from account
+		]]>
+	</select>
 </mapper>
