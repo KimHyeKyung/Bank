@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+						"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+						
+<mapper namespace="mapper.account">
+	<insert id="insertAccount" parameterType="com.kosta.bank.bean.Account">
+		<![CDATA[
+			insert into account(id, name, balance, sect, grade)
+			values(#{id}, #{name}, #{balance}, #{sect}, #{grade, jdbcType = VARCHAR})
+		]]>
+	</insert>
+	
+	<update id="deposit">
+		<![CDATA[
+			update account
+			set  balance = balance + #{balance}
+			where id = #{id}
+		]]>
+	</update>
+	
+	<update id="withdraw">
+		<![CDATA[
+			update account
+			set  balance = balance - #{balance}
+			where id = #{id}
+		]]>
+	</update>
+</mapper>
