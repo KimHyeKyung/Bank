@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+						"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+						
+<mapper namespace="mapper.member">
+
+	<!-- 멤버 조회 -->
+	<select id="selectMember" parameterType="String" resultType="com.kosta.bank.bean.Member">
+		<![CDATA[
+			select * from member
+			where id = #{id}
+		]]>
+	</select>
+	
+	<!-- 회원가입 수행 -->
+	<insert id="join" parameterType="com.kosta.bank.bean.Member">
+		<![CDATA[
+			insert into member(id, password, name, sex, age, email)
+			values(#{id}, #{password}, #{name}, #{sex}, #{age}, #{email})
+		]]>
+	</insert>
+	
+	
+
+
+
+
+
+
+</mapper>

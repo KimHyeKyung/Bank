@@ -25,5 +25,6 @@
 	<context:component-scan base-package="com.kosta.bank" />
 	
 	<beans:bean id="accountDAO" class="com.kosta.bank.dao.AccountDAOImpl" p:sqlSession-ref="sqlSession"/>
+	<beans:bean id="memberDAO" class="com.kosta.bank.dao.MemberDAOImpl" p:sqlSession-ref="sqlSession"/>
 	<!-- <beans:bean id="accountController" class="com.kosta.bank.controller.AccountController" p:accountDAO-ref="accountDAO"/> -->
 </beans:beans>

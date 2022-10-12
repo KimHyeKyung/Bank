@@ -10,6 +10,22 @@ $(function() {
 			$('select').removeAttr('disabled');
 		}
 	});
+	
+	$('#double').click(function(){
+		var id = $("#make_id").val();
+		$.ajax({
+			type:"post",
+			url:"http://localhost:8088/bank/accountId",
+			data:{id:id},
+			success:function(data,textStatus){
+				if(data == "true"){
+					alert("이미 존재하는 계좌번호 입니다.");
+				}else{
+					alert("사용가능한 계좌번호 입니다.");
+				}
+			}
+		});
+	});
 });
 </script>
 
@@ -18,7 +34,10 @@ $(function() {
 	<table border="1">
 		<tr>
 			<td>계좌번호</td>
-			<td><input type="text" name="id" id="make_id" /></td>
+			<td>
+				<input type="text" name="id" id="make_id" />
+				<input type="button" value="중복" id="double">
+			</td>
 		</tr>
 		<tr>
 			<td>이름</td>

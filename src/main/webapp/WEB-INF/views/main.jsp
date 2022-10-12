@@ -42,11 +42,21 @@
 </style>
 </head>
 <body>
-<h2 id="header">멀티캠퍼스 은행</h2>
+<h2 id="header">혜경ლ(╹◡╹ლ) 은행</h2>
 <table id="table">
-<tr><td colspan="3" id="top"><jsp:include page='top.jsp'/></td></tr>
-<tr><td id="left"><jsp:include page='menu.jsp'/></td>
-    <td colspan="2" id="right" align="center" valign="top"><jsp:include page='${page}.jsp'/></td></tr>
+<tr>
+	<td colspan="3" id="top">
+		<jsp:include page='top.jsp'/>
+	</td>
+</tr>
+<tr>
+	<td id="left">
+		<jsp:include page='menu.jsp'/>
+	</td>
+    <td colspan="2" id="right" align="center" valign="top">
+    	<jsp:include page='${page}.jsp'/>
+    </td>
+</tr>
 </table>
 </body>
 </html>

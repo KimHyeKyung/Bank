@@ -1,11 +1,35 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<script src= "https://code.jquery.com/jquery-3.4.1.js"></script>
+<script>
+$(function(){
+	$('#double').click(function(){
+		var id = $("#id").val();
+		$.ajax({
+			type:"post",
+			url:"http://localhost:8088/bank/mid",
+			data:{id:id},
+			success:function(data,textStatus){
+				if(data == "true"){
+					alert("중복 아이디 입니다.");
+				}else{
+					alert("사용가능한 아이디 입니다.")
+				}
+			}
+		});
+	});
+});
+</script>
+
 <h3>[ 회원정보 입력 ]</h3>
 <form action="./join" method="post">
 <table border="1">
 	<tr>
 		<td><label for = "id">아이디 : </label></td>
-		<td><input type="text" name="id" id = "id"></td>
+		<td>
+			<input type="text" name="id" id = "id">
+			<input type="button" value="중복" id="double">
+		</td>
 	</tr>
 	<tr>
 		<td><label for = "pass">비밀번호 : </label></td>

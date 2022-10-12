@@ -2,19 +2,19 @@ package com.kosta.bank.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kosta.bank.bean.Account;
 import com.kosta.bank.dao.AccountDAO;
+import com.kosta.bank.service.AccountService;
 
 @Controller
 public class AccountController {
@@ -22,9 +22,9 @@ public class AccountController {
 	@Autowired
 	AccountDAO accountDAO;
 	
-//	public void setAccountDAO(AccountDAO accountDAO) {
-//		this.accountDAO = accountDAO;
-//	}
+	@Autowired
+	AccountService accountService;
+
 
 	//로그인
 	@RequestMapping(value = "/", method = RequestMethod.GET)
@@ -160,6 +160,22 @@ public class AccountController {
 		return "main";
 	}
 	
+	
+	//계좌 중복체크
+	//ajax를 사용할때는 @ResponseBody를 써야한다.
+	@ResponseBody
+	@RequestMapping(value = "/accountId", method = RequestMethod.POST)
+	String accountId(@RequestParam("id") String id) {
+		try {
+			if(accountService.isDoubleAccountId(id)) {
+				return "true"; //ture면 중복된 계좌
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "false";//false면 사용가능한 계좌
+	}
+		
 	
 	
 }
