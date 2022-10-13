@@ -20,6 +20,7 @@ $(function() {
 			success:function(data,textStatus){
 				if(data == "true"){
 					alert("이미 존재하는 계좌번호 입니다.");
+					$("#make_id").val("");
 				}else{
 					alert("사용가능한 계좌번호 입니다.");
 				}
