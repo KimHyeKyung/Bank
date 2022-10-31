@@ -26,24 +26,24 @@ public class AccountController {
 	AccountService accountService;
 
 
-	//·Î±×ÀÎ
+	//ë¡œê·¸ì¸
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	String main(Model model) {
 		model.addAttribute("page","login_form");
 		return "main";
 	}
 	
-	//°èÁÂ°³¼³ ÆäÀÌÁö
+	//ê³„ì¢Œê°œì„¤ í˜ì´ì§€
 	@RequestMapping(value = "/makeaccount", method = RequestMethod.GET)
 	String makeAccount(Model model) {
 		model.addAttribute("page", "makeaccount_form");
 		return "main";
 	}
 	
-	//ÇÔ¼ö´Â ¸Ş¼­µå ¿À¹ö·Îµù¿¡ ÀÇÇØ¼­ ÇÔ¼ö¸íÀÌ ¶È°°¾Æµµ ¸Å°³º¯¼öÀÇ °³¼ö³ª Å¸ÀÔ¿¡ µû¶ó¼­ ´Ù¸¥ ¸Ş¼­µå·Î ÀÎ½ÄµÈ´Ù.
+	//í•¨ìˆ˜ëŠ” ë©”ì„œë“œ ì˜¤ë²„ë¡œë”©ì— ì˜í•´ì„œ í•¨ìˆ˜ëª…ì´ ë˜‘ê°™ì•„ë„ ë§¤ê°œë³€ìˆ˜ì˜ ê°œìˆ˜ë‚˜ íƒ€ì…ì— ë”°ë¼ì„œ ë‹¤ë¥¸ ë©”ì„œë“œë¡œ ì¸ì‹ëœë‹¤.
 	@RequestMapping(value = "/make_account", method = RequestMethod.POST)
 	String makeAccount(HttpServletRequest request, Model model) {
-		//¹İµå½Ã ÄÁÆ®·Ñ·¯¿¡¼­ ¿¹¿ÜÃ³¸®¸¦ ÇØ¾ßÇÑ´Ù.
+		//ë°˜ë“œì‹œ ì»¨íŠ¸ë¡¤ëŸ¬ì—ì„œ ì˜ˆì™¸ì²˜ë¦¬ë¥¼ í•´ì•¼í•œë‹¤.
 		try {
 			Account acc = new Account();
 			acc.setId(request.getParameter("id"));
@@ -60,25 +60,25 @@ public class AccountController {
 			model.addAttribute("page","makeaccount_success");
 		} catch (Exception e) {
 			e.printStackTrace();
-			model.addAttribute("err", "°èÁÂ°³¼³ ½ÇÆĞ");
+			model.addAttribute("err", "ê³„ì¢Œê°œì„¤ ì‹¤íŒ¨");
 			model.addAttribute("page", "err");
 		}
 		return "main";
 	}
 	
-	//ÀÔ±İÆäÀÌÁö
+	//ì…ê¸ˆí˜ì´ì§€
 	@RequestMapping(value = "/deposit", method = RequestMethod.GET)
 	String deposit(Model model) {
 		model.addAttribute("page", "deposit_form");
 		return "main";
 	}
 	
-	//ÀÔ±İ¼öÇà
+	//ì…ê¸ˆìˆ˜í–‰
 	@RequestMapping(value = "/deposit", method = RequestMethod.POST)
 	String deposit(Model model, @RequestParam("id") String id, @RequestParam("money") int money) {
 		try {
 			Account acc = accountDAO.selectAccount(id);
-			if(acc == null) throw new Exception("°èÁÂ¹øÈ£ ¿À·ù");
+			if(acc == null) throw new Exception("ê³„ì¢Œë²ˆí˜¸ ì˜¤ë¥˜");
 			acc.deposit(money);
 			accountDAO.updateAccount(acc);
 			model.addAttribute("id",acc.getId());
@@ -86,27 +86,27 @@ public class AccountController {
 			model.addAttribute("page","deposit_success");
 		} catch (Exception e) {
 			e.printStackTrace();
-			model.addAttribute("err", "ÀÔ±İ ½ÇÆĞ");
+			model.addAttribute("err", "ì…ê¸ˆ ì‹¤íŒ¨");
 			model.addAttribute("page", "err");
 		}
 		return "main";
 	}
 	
-	//Ãâ±İÆäÀÌÁö
+	//ì¶œê¸ˆí˜ì´ì§€
 	@RequestMapping(value = "/withdraw", method = RequestMethod.GET)
 	String withdraw(Model model) {
 		model.addAttribute("page", "withdraw_form");
 		return "main";
 	}
 	
-	//Ãâ±İ¼öÇà
+	//ì¶œê¸ˆìˆ˜í–‰
 	@RequestMapping(value = "/withdraw", method = RequestMethod.POST)
 	String withdraw(Model model, @RequestParam("id") String id, @RequestParam("money") int money) {
 		try {
 			Account acc = accountDAO.selectAccount(id);
-			if(acc == null) throw new Exception("°èÁÂ¹øÈ£ ¿À·ù");
+			if(acc == null) throw new Exception("ê³„ì¢Œë²ˆí˜¸ ì˜¤ë¥˜");
 			if(acc.getBalance() < money) {
-				throw new Exception("ÀÜ¾× ºÎÁ·");
+				throw new Exception("ì”ì•¡ ë¶€ì¡±");
 			}else {
 				acc.withdraw(money);
 			}
@@ -116,20 +116,20 @@ public class AccountController {
 			model.addAttribute("page","withdraw_success");
 		} catch (Exception e) {
 			e.printStackTrace();
-			model.addAttribute("err", "Ãâ±İ ½ÇÆĞ");
+			model.addAttribute("err", "ì¶œê¸ˆ ì‹¤íŒ¨");
 			model.addAttribute("page", "err");
 		}
 		return "main";
 	}
 	
-	//°èÁÂÁ¶È¸ ÆäÀÌÁö
+	//ê³„ì¢Œì¡°íšŒ í˜ì´ì§€
 	@RequestMapping(value = "/accinfo", method = RequestMethod.GET)
 	String accinfo(Model model) {
 		model.addAttribute("page", "accinfo_form");
 		return "main";
 	}
 	
-	//°èÁÂÁ¶È¸ ¼öÇà
+	//ê³„ì¢Œì¡°íšŒ ìˆ˜í–‰
 	@RequestMapping(value = "/acc_info", method = RequestMethod.POST)
 	String accinfo(@RequestParam("id") String id, Model model) {
 		try {
@@ -139,13 +139,13 @@ public class AccountController {
 			model.addAttribute("page","accinfo_success");
 		} catch (Exception e) {
 			e.printStackTrace();
-			model.addAttribute("err", "°èÁÂÁ¶È¸ ½ÇÆĞ");
+			model.addAttribute("err", "ê³„ì¢Œì¡°íšŒ ì‹¤íŒ¨");
 			model.addAttribute("page", "err");
 		}
 		return "main";
 	}
 	
-	//ÀüÃ¼°èÁÂ Á¶È¸
+	//ì „ì²´ê³„ì¢Œ ì¡°íšŒ
 	@RequestMapping(value = "/allaccinfo", method = RequestMethod.GET)
 	String allaccinfo(Model model) {
 		try {
@@ -154,26 +154,26 @@ public class AccountController {
 			model.addAttribute("page","allaccinfo_success");
 		} catch (Exception e) {
 			e.printStackTrace();
-			model.addAttribute("err", "ÀüÃ¼°èÁÂÁ¶È¸ ½ÇÆĞ");
+			model.addAttribute("err", "ì „ì²´ê³„ì¢Œì¡°íšŒ ì‹¤íŒ¨");
 			model.addAttribute("page", "err");
 		}
 		return "main";
 	}
 	
 	
-	//°èÁÂ Áßº¹Ã¼Å©
-	//ajax¸¦ »ç¿ëÇÒ¶§´Â @ResponseBody¸¦ ½á¾ßÇÑ´Ù.
+	//ê³„ì¢Œ ì¤‘ë³µì²´í¬
+	//ajaxë¥¼ ì‚¬ìš©í• ë•ŒëŠ” @ResponseBodyë¥¼ ì¨ì•¼í•œë‹¤.
 	@ResponseBody
 	@RequestMapping(value = "/accountId", method = RequestMethod.POST)
 	String accountId(@RequestParam("id") String id) {
 		try {
 			if(accountService.isDoubleAccountId(id)) {
-				return "true"; //ture¸é Áßº¹µÈ °èÁÂ
+				return "true"; //tureë©´ ì¤‘ë³µëœ ê³„ì¢Œ
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "false";//false¸é »ç¿ë°¡´ÉÇÑ °èÁÂ
+		return "false";//falseë©´ ì‚¬ìš©ê°€ëŠ¥í•œ ê³„ì¢Œ
 	}
 		
 	
